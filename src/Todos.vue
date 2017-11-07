@@ -3,13 +3,19 @@
     <img src="./assets/logo.png">
     <h1>やるべきことリスト</h1>
     <div>
-      <input v-model="text" type="textarea" id="textarea" ref="profile" v-on:keyup.13="enter" placeholder="追加したい内容を入力してください" maxlength='50'>
+      <input v-model="text" type="textarea" id="textarea" ref="profile" v-on:keyup.13="addTodos" placeholder="追加したい内容を入力してください" maxlength='50'>
     </div>
-    <div v-for="todo in todos">
-      <input type="checkbox" id="todo.id" value="todo.value">
-      <label for="todo.id">{{todo.value}}</label>
+    <div v-for="(todo, index) in todos">
+      <input type="checkbox" id="todo[index]" v-on:click="removeTodos(index)">
+      <label for="todo[index]">{{todo.value}}</label>
+      <span for="todo.value">{{todo.date}}</span>
     </div>
-    <!--<router-view></router-view>-->
+    <h3>完了済み</h3>
+    <div v-for="(doneTodo, index) in doneTodos">
+      <input type="checkbox" id="doneTodo[index]" v-on:click="sulvageTodos(index)" checked>
+      <label for="doneTodo[index]">{{doneTodo.value}}</label>
+      <span for="doneTodo.value">{{doneTodo.date}}</span>
+    </div>
   </div>
 </template>
 
@@ -20,21 +26,38 @@ export default {
     text: ''
   },
   methods: {
-    enter: function (event) {
-      // alert(this.text)
-      this.todos.push({id: 3, value: this.text})
+    sulvageTodos: function (index) {
+      this.todos.push({value: this.doneTodos[index].value, date: this.doneTodos[index].date})
+      this.doneTodos.splice(index, 1)
+    },
+    removeTodos: function (index) {
+      this.doneTodos.push({value: this.todos[index].value, date: this.todos[index].date})
+      this.todos.splice(index, 1)
+    },
+    addTodos: function (event) {
+      this.todos.push({value: this.text, date: new Date()})
     }
   },
   data () {
     return {
       todos: [
         {
-          id: '1',
-          value: 'Vueの勉強をする'
+          value: 'Vueの勉強をする',
+          date: '2017/10/10'
         },
         {
-          id: '2',
-          value: 'Railsの勉強をする'
+          value: 'Railsの勉強をする',
+          date: '2017/10/10'
+        }
+      ],
+      doneTodos: [
+        {
+          value: 'JavaScriptの勉強をする',
+          date: '2017/10/09'
+        },
+        {
+          value: 'CSSの勉強をする',
+          date: '2017/10/09'
         }
       ]
     }
