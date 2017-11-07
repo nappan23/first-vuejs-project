@@ -5,13 +5,21 @@
       <input v-model="text" type="textarea" id="textarea" ref="profile" v-on:keyup.13="addTodos" placeholder="追加したい内容を入力してください" maxlength='50'>
     </div>
     <h3>やるべきことリスト</h3>
-    <ul id="todoList" v-for="(todo, index) in todos">
-      <li id="todo[index]" v-on:click="removeTodos(index)">{{todo.value}}<span>{{todo.date}}</span></li>
-    </ul>
+    <table id="todoList" v-for="(todo, index) in todos">
+      <tr v-on:click="removeTodos(index)">
+        <td>○</td>
+        <td id="todo[index]">{{todo.value}}</td>
+        <td>{{todo.date}}</td>
+      </tr>
+    </table>
     <h3>完了済み</h3>
-    <ul id="doneList" v-for="(doneTodo, index) in doneTodos">
-      <li id="doneTodo[index]" v-on:click="sulvageTodos(index)">{{doneTodo.value}}<span>{{doneTodo.date}}</span></li>
-    </ul>
+    <table id="doneList" v-for="(doneTodo, index) in doneTodos">
+      <tr v-on:click="sulvageTodos(index)">
+        <td>✔</td>
+        <td id="doneTodo[index]">{{doneTodo.value}}</td>
+        <td>{{doneTodo.date}}</td>
+      </tr>
+    </table>
   </div>
 </template>
 
