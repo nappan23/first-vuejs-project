@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 export default {
   name: 'app',
   state: {
@@ -35,7 +36,7 @@ export default {
       this.todos.splice(index, 1)
     },
     addTodos: function (event) {
-      this.todos.push({value: this.text, date: new Date()})
+      this.todos.push({value: this.text, date: moment(new Date()).format('YYYY/MM/DD HH:mm')})
     }
   },
   data () {
@@ -43,21 +44,21 @@ export default {
       todos: [
         {
           value: 'Vueの勉強をする',
-          date: '2017/10/10'
+          date: moment('2017/10/10').format('YYYY/MM/DD HH:mm')
         },
         {
           value: 'Railsの勉強をする',
-          date: '2017/10/10'
+          date: moment('2017/10/10').format('YYYY/MM/DD HH:mm')
         }
       ],
       doneTodos: [
         {
           value: 'JavaScriptの勉強をする',
-          date: '2017/10/09'
+          date: moment('2017/10/09').format('YYYY/MM/DD HH:mm')
         },
         {
           value: 'CSSの勉強をする',
-          date: '2017/10/09'
+          date: moment('2017/10/09').format('YYYY/MM/DD HH:mm')
         }
       ]
     }
