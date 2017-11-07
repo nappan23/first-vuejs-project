@@ -5,17 +5,13 @@
     <div>
       <input v-model="text" type="textarea" id="textarea" ref="profile" v-on:keyup.13="addTodos" placeholder="追加したい内容を入力してください" maxlength='50'>
     </div>
-    <div v-for="(todo, index) in todos">
-      <input type="checkbox" id="todo[index]" v-on:click="removeTodos(index)">
-      <label for="todo[index]">{{todo.value}}</label>
-      <span for="todo.value">{{todo.date}}</span>
-    </div>
+    <ul id="todoList" v-for="(todo, index) in todos">
+      <li id="todo[index]" v-on:click="removeTodos(index)">{{todo.value}}<span>{{todo.date}}</span></li>
+    </ul>
     <h3>完了済み</h3>
-    <div v-for="(doneTodo, index) in doneTodos">
-      <input type="checkbox" id="doneTodo[index]" v-on:click="sulvageTodos(index)" checked>
-      <label for="doneTodo[index]">{{doneTodo.value}}</label>
-      <span for="doneTodo.value">{{doneTodo.date}}</span>
-    </div>
+    <ul id="doneList" v-for="(doneTodo, index) in doneTodos">
+      <li id="doneTodo[index]" v-on:click="sulvageTodos(index)">{{doneTodo.value}}<span>{{doneTodo.date}}</span></li>
+    </ul>
   </div>
 </template>
 
@@ -75,4 +71,40 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
+ul#doneList li {
+  list-style: none;
+  position: relative;
+}
+ul#doneList li::after {
+  display: block;
+  content: '';
+  position: absolute;
+  top: .5em;
+  left: -1em;
+  width: 8px;
+  height: 3px;
+  border-left: 2px solid #3498db;
+  border-bottom: 2px solid #3498db;
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+ul#todoList li {
+  list-style: none;
+  position: relative;
+}
+ul#todoList li::after {
+  display: block;
+  content: '';
+  position: absolute;
+  top: .5em;
+  left: -1em;
+  width: 5px;
+  height: 5px;
+  background-color: #fff;
+  border: 1px solid #3498db;
+  border-radius: 100%;
+}
+
 </style>
