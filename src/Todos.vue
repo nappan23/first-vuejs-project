@@ -1,10 +1,10 @@
 <template>
   <div id="test">
     <img src="./assets/logo.png">
-    <h1>やるべきことリスト</h1>
     <div>
       <input v-model="text" type="textarea" id="textarea" ref="profile" v-on:keyup.13="addTodos" placeholder="追加したい内容を入力してください" maxlength='50'>
     </div>
+    <h3>やるべきことリスト</h3>
     <ul id="todoList" v-for="(todo, index) in todos">
       <li id="todo[index]" v-on:click="removeTodos(index)">{{todo.value}}<span>{{todo.date}}</span></li>
     </ul>
