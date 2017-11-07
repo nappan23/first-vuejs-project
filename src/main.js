@@ -3,7 +3,9 @@
 import Vue from 'vue'
 import Todos from './Todos'
 import router from './router'
+import BootstrapVue from 'bootstrap-vue'
 
+Vue.use(BootstrapVue)
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
@@ -15,6 +17,7 @@ new Vue({
   components: { App }
 })
 */
+
 new Vue({
   el: '#test',
   template: '<Todos/>',
