@@ -6,10 +6,11 @@
     </div>
     <h3>やるべきことリスト</h3>
     <table id="todoList">
-      <thead><td></td><td>項目名</td><td>日付</td></thead>
-      <template v-for="(todo, index) in todos">
-        <tr v-on:click="removeTodos(index)">
+      <thead><td></td><td>id</td><td>項目名</td><td>日付</td></thead>
+      <template v-for="(todo, index) in todoList">
+        <tr v-on:click="changeTodosStatus(todo.id, 1)">
           <td>○</td>
+          <td>{{todo.id}}</td>
           <td id="todo[index]">{{todo.value}}</td>
           <td>{{todo.date}}</td>
         </tr>
@@ -17,12 +18,13 @@
     </table>
     <h3>完了済み</h3>
     <table id="doneList">
-      <thead><td></td><td>項目名</td><td>日付</td></thead>
-      <template v-for="(doneTodo, index) in doneTodos">
-        <tr v-on:click="sulvageTodos(index)">
+      <thead><td></td><td>id</td><td>項目名</td><td>日付</td></thead>
+      <template v-for="(todo, index) in doneList">
+        <tr v-on:click="changeTodosStatus(todo.id, 0)">
           <td>✔</td>
-          <td id="doneTodo[index]">{{doneTodo.value}}</td>
-          <td>{{doneTodo.date}}</td>
+          <td>{{todo.id}}</td>
+          <td id="todo[index]">{{todo.value}}</td>
+          <td>{{todo.date}}</td>
         </tr>
       </template>
     </table>
@@ -38,40 +40,59 @@ export default {
     text: ''
   },
   methods: {
-    sulvageTodos: function (index) {
-      this.todos.push({value: this.doneTodos[index].value, date: this.doneTodos[index].date})
-      this.doneTodos.splice(index, 1)
-    },
-    removeTodos: function (index) {
-      this.doneTodos.push({value: this.todos[index].value, date: this.todos[index].date})
-      this.todos.splice(index, 1)
+    changeTodosStatus: function (index, status) {
+      this.todos[index - 1].status = status
     },
     addTodos: function (event) {
-      this.todos.push({value: this.text, date: moment(new Date()).format('YYYY/MM/DD HH:mm')})
+      this.todos.push({
+        id: this.nextTodoId++,
+        value: this.text,
+        date: moment(new Date()).format('YYYY/MM/DD HH:mm'),
+        status: 0
+      })
+    }
+  },
+  computed: {
+    todoList: function (todos) {
+      return this.todos.filter(function (todos) {
+        return todos.status === 0
+      })
+    },
+    doneList: function (todos) {
+      return this.todos.filter(function (todos) {
+        return todos.status === 1
+      })
     }
   },
   data () {
     return {
       todos: [
         {
+          id: 1,
           value: 'Vueの勉強をする',
-          date: moment('2017/10/10').format('YYYY/MM/DD HH:mm')
+          date: moment('2017/10/10').format('YYYY/MM/DD HH:mm'),
+          status: 0
         },
         {
+          id: 2,
           value: 'Railsの勉強をする',
-          date: moment('2017/10/10').format('YYYY/MM/DD HH:mm')
+          date: moment('2017/10/10').format('YYYY/MM/DD HH:mm'),
+          status: 0
+        },
+        {
+          id: 3,
+          value: 'JavaScriptの勉強をする',
+          date: moment('2017/10/09').format('YYYY/MM/DD HH:mm'),
+          status: 1
+        },
+        {
+          id: 4,
+          value: 'CSSの勉強をする',
+          date: moment('2017/10/09').format('YYYY/MM/DD HH:mm'),
+          status: 1
         }
       ],
-      doneTodos: [
-        {
-          value: 'JavaScriptの勉強をする',
-          date: moment('2017/10/09').format('YYYY/MM/DD HH:mm')
-        },
-        {
-          value: 'CSSの勉強をする',
-          date: moment('2017/10/09').format('YYYY/MM/DD HH:mm')
-        }
-      ]
+      nextTodoId: 5
     }
   }
 }
