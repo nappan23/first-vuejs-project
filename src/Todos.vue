@@ -5,30 +5,33 @@
       <input v-model="text" type="textarea" id="textarea" ref="profile" v-on:keyup.13="addTodos" placeholder="追加したい内容を入力してください" maxlength='50'>
     </div>
     <h3>やるべきことリスト</h3>
-    <table id="todoList">
-      <thead><td></td><td>id</td><td>項目名</td><td>日付</td></thead>
-      <template v-for="(todo, index) in todoList">
-        <tr v-on:click="changeTodosStatus(todo.id, 1)">
-          <td>○</td>
-          <td>{{todo.id}}</td>
-          <td id="todo[index]">{{todo.value}}</td>
-          <td>{{todo.date}}</td>
-        </tr>
-      </template>
-    </table>
+    <template v-if="todoList.length > 0">
+      <table id="todoList">
+        <thead><td></td><td>id</td><td>項目名</td><td>日付</td></thead>
+        <template v-for="(todo, index) in todoList">
+          <tr v-on:click="changeTodosStatus(todo.id, 1)">
+            <td>○</td>
+            <td>{{todo.id}}</td>
+            <td id="todo[index]">{{todo.value}}</td>
+            <td>{{todo.date}}</td>
+          </tr>
+        </template>
+      </table>
+    </template>
     <h3>完了済み</h3>
-    <table id="doneList">
-      <thead><td></td><td>id</td><td>項目名</td><td>日付</td></thead>
-      <template v-for="(todo, index) in doneList">
-        <tr v-on:click="changeTodosStatus(todo.id, 0)">
-          <td>✔</td>
-          <td>{{todo.id}}</td>
-          <td id="todo[index]">{{todo.value}}</td>
-          <td>{{todo.date}}</td>
-        </tr>
-      </template>
-    </table>
-
+    <template v-if="doneList.length > 0">
+      <table id="doneList">
+        <thead><td></td><td>id</td><td>項目名</td><td>日付</td></thead>
+        <template v-for="(todo, index) in doneList">
+          <tr v-on:click="changeTodosStatus(todo.id, 0)">
+            <td>✔</td>
+            <td>{{todo.id}}</td>
+            <td id="todo[index]">{{todo.value}}</td>
+            <td>{{todo.date}}</td>
+          </tr>
+        </template>
+      </table>
+    </template>
   </div>
 </template>
 
